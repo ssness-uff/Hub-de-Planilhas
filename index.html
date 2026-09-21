@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal de Soluções SSN-UFF</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700;8..60,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1c2430; --ink-soft:#3a4352; --muted:#746b5c;
+    --paper:#f8f4ec; --paper-raised:#ffffff; --paper-alt:#efe8d9; --line:#ddd3bd;
+    --forest:#2f5c3f; --forest-dark:#1e3d29;
+    --gold:#a9843f; --gold-bg:#f1e6cd; --gold-text:#8a6a26;
+    --ok-bg:#eef2e8; --ok-text:#3f6c46;
+    --teal:#3b6e77; --teal-bg:#e6eeef;
+    --rust:#8a4a30; --rust-bg:#f2e4dc;
+    --slate:#3d5a73; --slate-bg:#e4ebf1;
+    --plum:#6b4a75; --plum-bg:#efe6f1;
+    --danger:#9c3b3b;
+    --shadow: 0 1px 2px rgba(28,36,48,.06), 0 8px 24px rgba(28,36,48,.08);
+    --radius: 10px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#ece6d8; --ink-soft:#cfc7b4; --paper:#191510; --paper-raised:#231d16;
+      --paper-alt:#2a2318; --line:#3c3222; --forest:#8fcf9e; --forest-dark:#b3e6c0;
+      --gold:#d3ab6c; --gold-bg:#2e2617; --gold-text:#d3ab6c;
+      --ok-bg:#1d2a1e; --ok-text:#9fce9f; --muted:#a89d88; --danger:#e08787;
+      --teal:#8fc4cc; --teal-bg:#182a2c; --rust:#d99a7c; --rust-bg:#2c2019;
+      --slate:#9db8cc; --slate-bg:#1b2530; --plum:#c9a6d1; --plum-bg:#241f28;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#ece6d8; --ink-soft:#cfc7b4; --paper:#191510; --paper-raised:#231d16;
+    --paper-alt:#2a2318; --line:#3c3222; --forest:#8fcf9e; --forest-dark:#b3e6c0;
+    --gold:#d3ab6c; --gold-bg:#2e2617; --gold-text:#d3ab6c;
+    --ok-bg:#1d2a1e; --ok-text:#9fce9f; --muted:#a89d88; --danger:#e08787;
+    --teal:#8fc4cc; --teal-bg:#182a2c; --rust:#d99a7c; --rust-bg:#2c2019;
+    --slate:#9db8cc; --slate-bg:#1b2530; --plum:#c9a6d1; --plum-bg:#241f28;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--forest-dark)}
+  h1,h2,h3,.serif{font-family:'Source Serif 4',Georgia,serif}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 28px}
+
+  header.dept{
+    background:linear-gradient(180deg,var(--forest) 0%,var(--forest-dark) 100%);
+    color:#f7ece2; padding:34px 0 30px; border-bottom:4px solid var(--gold);
+  }
+  header.dept .wrap{display:flex;align-items:center;gap:22px;flex-wrap:wrap;justify-content:space-between}
+  .header-left{display:flex;align-items:center;gap:22px;flex:1;min-width:260px}
+  .crest{
+    width:64px;height:64px;border-radius:50%;flex-shrink:0;
+    border:2px solid rgba(247,236,226,.55);background:rgba(0,0,0,.08);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Source Serif 4',serif;font-weight:600;font-size:20px;letter-spacing:.5px;
+  }
+  header.dept .titles{min-width:220px}
+  header.dept h1{margin:0 0 4px;font-size:26px;font-weight:600;letter-spacing:.2px}
+  header.dept p{margin:0;font-size:14.5px;color:rgba(247,236,226,.82)}
+  header.dept p.sub2{margin-top:3px;font-size:12.5px;color:rgba(247,236,226,.6)}
+
+  .header-right{display:flex;flex-direction:column;align-items:flex-end;gap:9px}
+  .recentes-icons{display:flex;gap:6px}
+  .recentes-icons .ri{
+    width:30px;height:30px;border-radius:50%;flex-shrink:0;font-size:14px;
+    background:rgba(255,255,255,.14);border:1px solid rgba(247,236,226,.35);
+    display:flex;align-items:center;justify-content:center;cursor:default;
+  }
+  .recentes-icons .ri-empty{font-size:11px;color:rgba(247,236,226,.55)}
+  .badge-test{
+    font-size:12px;padding:4px 10px;border-radius:999px;
+    border:1px solid rgba(247,236,226,.5);color:#f7ece2;white-space:nowrap;
+  }
+
+  main{padding:26px 0 70px}
+
+  .card-panel{background:var(--paper-raised);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);margin-bottom:22px}
+  .card-panel h2{font-size:13px;font-weight:600;color:var(--muted);margin:0 0 10px;font-family:'Inter',sans-serif}
+
+  .breakdown ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px 22px}
+  .breakdown li{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink-soft)}
+  .breakdown .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+  .breakdown b{color:var(--ink);font-weight:600}
+
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+  .toolbar input[type="search"]{
+    flex:1;min-width:220px;padding:10px 14px;border:1px solid var(--line);border-radius:8px;
+    background:var(--paper-raised);color:var(--ink);font-size:14px;font-family:inherit;
+  }
+  .toolbar input[type="search"]:focus{outline:none;border-color:var(--gold)}
+  .counter{font-size:12.5px;color:var(--muted);white-space:nowrap}
+  .counter b{color:var(--forest-dark)}
+
+  .cats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+  .cat{
+    font-size:13px;border:1px solid var(--line);background:var(--paper-raised);color:var(--ink-soft);
+    padding:7px 14px;border-radius:999px;cursor:pointer;transition:all .15s;font-family:inherit;
+  }
+  .cat:hover{border-color:var(--gold)}
+  .cat.on{background:var(--forest);color:#f7ece2;border-color:var(--forest)}
+
+  .sec-title{font-family:'Source Serif 4',serif;font-weight:600;font-size:21px;margin:0 0 4px}
+  .sec-sub{color:var(--muted);font-size:13.5px;margin:0 0 18px}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+  .item{
+    background:var(--paper-raised);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:18px;position:relative;display:flex;flex-direction:column;
+    border-left:4px solid var(--cat-color,var(--forest));transition:box-shadow .2s,transform .2s;cursor:pointer;
+  }
+  .item:hover{transform:translateY(-2px);box-shadow:0 4px 6px rgba(28,36,48,.08),0 14px 32px rgba(28,36,48,.14)}
+
+  .item-head{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .icon{
+    width:42px;height:42px;border-radius:9px;flex-shrink:0;font-size:1.3rem;
+    display:flex;align-items:center;justify-content:center;background:var(--cat-bg,var(--gold-bg));
+  }
+  .cat-label{font-size:11px;font-weight:600;letter-spacing:.2px;color:var(--cat-color,var(--forest-dark));margin-bottom:2px}
+  .item h3{font-family:'Source Serif 4',serif;font-size:16.5px;font-weight:600;line-height:1.3;margin:0}
+  .freq{font-size:12px;color:var(--muted);margin-top:5px}
+
+  .status-pill{
+    position:absolute;top:16px;right:16px;
+    font-size:11px;font-weight:600;padding:4px 10px;border-radius:999px;
+  }
+  .status-on{background:var(--ok-bg);color:var(--ok-text)}
+  .status-pend{background:var(--paper-alt);color:var(--muted)}
+  .status-soon{background:var(--gold-bg);color:var(--gold-text)}
+
+  .desc{font-size:13.5px;color:var(--ink-soft);margin:8px 0 14px;flex:1;line-height:1.5}
+
+  .actions{display:flex;gap:8px;margin-top:auto}
+  .btn{
+    font-size:13px;font-weight:500;padding:9px 14px;border-radius:8px;cursor:pointer;
+    border:1px solid var(--line);background:var(--paper-raised);color:var(--ink);
+    text-align:center;text-decoration:none;flex:1;font-family:inherit;transition:all .15s;
+  }
+  .btn:hover{border-color:var(--gold)}
+  .btn-primary{background:var(--forest);color:#f7ece2;border-color:var(--forest)}
+  .btn-primary:hover{background:var(--forest-dark);border-color:var(--forest-dark)}
+  .btn-icon{flex:none;width:38px;padding:9px 0}
+  .btn:disabled{background:var(--paper-alt);border-color:var(--line);color:var(--muted);cursor:not-allowed}
+
+  .empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted);border:1px dashed var(--line);border-radius:var(--radius)}
+  .empty h3{font-family:'Source Serif 4',serif;color:var(--ink);margin:8px 0;font-size:18px}
+
+  /* ---------- rodapé "como editar" — texto mais claro sobre fundo escuro ---------- */
+  .edit-guide{background:linear-gradient(180deg,var(--forest-dark) 0%,var(--forest) 100%);color:#fdf8ef;padding:36px 0;margin-top:32px}
+  .edit-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
+  .edit-grid h2{font-size:20px;color:#fbe9c3;margin:0 0 10px}
+  .edit-grid p{opacity:1;color:#fdf8ef;margin:0 0 14px;font-size:14px}
+  /* bloco de código com fundo claro, mantendo legibilidade do exemplo */
+  .code-box{
+    background:var(--paper-raised);border:1px solid var(--line);border-radius:9px;
+    padding:16px;font-family:ui-monospace,'SF Mono',monospace;font-size:12.5px;line-height:1.7;
+    color:var(--ink);overflow-x:auto;white-space:pre;box-shadow:var(--shadow);
+  }
+  .code-box .c{color:var(--forest-dark);font-weight:500}
+  .code-box .k{color:var(--gold-text);font-weight:600}
+  .step-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+  .step-list li{display:flex;gap:12px;align-items:flex-start}
+  .step-list b{
+    font-family:'Source Serif 4',serif;background:var(--gold);color:var(--forest-dark);
+    width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;font-size:13px;font-weight:700;
+  }
+  .step-list p{margin:0;opacity:1;color:#fdf8ef;font-size:13.5px}
+  .edit-grid .hint{margin-top:1rem;font-size:.85rem;opacity:.95;color:#fdf8ef}
+
+  .toast{
+    position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120%);
+    background:var(--forest-dark);color:#f7ece2;font-size:13px;padding:10px 18px;border-radius:9px;
+    transition:transform .3s;z-index:100;box-shadow:0 10px 30px rgba(0,0,0,.25);
+  }
+  .toast.show{transform:translateX(-50%) translateY(0)}
+
+  footer{background:var(--ink);color:#b9b2a1;padding:26px 0;text-align:center;font-size:13px}
+  footer b{color:#f7ece2}
+  footer a{color:var(--gold)}
+
+  @media (max-width:760px){
+    .edit-grid{grid-template-columns:1fr}
+    header.dept .wrap{justify-content:flex-start}
+    .header-right{align-items:flex-start;width:100%}
+  }
+</style>
+</head>
+<body>
+
+<header class="dept">
+  <div class="wrap">
+    <div class="header-left">
+      <div class="crest">SSN</div>
+      <div class="titles">
+        <h1>Portal de Soluções SSN-UFF</h1>
+        <p>Matriz de Sistemas, Planilhas e Rotinas</p>
+        <p class="sub2">Departamento de Serviço Social em Niterói</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="recentes-icons" id="recentes-icons"></div>
+      <span class="badge-test">Protótipo de teste</span>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <div class="card-panel breakdown">
+    <h2>Itens por área</h2>
+    <ul id="cat-breakdown"></ul>
+  </div>
+
+  <div class="toolbar">
+    <input type="search" id="busca" placeholder="Buscar planilha, categoria ou tema...">
+    <span class="counter"><b id="c-show">0</b> / <b id="c-all">0</b> itens</span>
+  </div>
+
+  <div class="cats" id="cats"></div>
+
+  <h2 class="sec-title">Todos os processos do departamento</h2>
+  <p class="sec-sub">Itens ativos abrem direto em nova aba · Itens pendentes sinalizam automações ainda em desenvolvimento</p>
+  <div class="grid" id="grid"></div>
+
+</div>
+</main>
+
+<section class="edit-guide" id="guia">
+  <div class="wrap edit-grid">
+    <div>
+      <h2>Como editar este hotsite</h2>
+      <p>Todas as planilhas estão declaradas em um único array JavaScript chamado <b>ITENS</b>. Adicionar, remover ou editar é só manipular esse array — nada mais.</p>
+      <ul class="step-list">
+        <li><b>+</b><div><p><b>Adicionar</b>: copie um bloco inteiro e cole no fim do array, editando os campos.</p></div></li>
+        <li><b>✎</b><div><p><b>Alterar link</b>: edite o campo <code>link</code> com o novo endereço do Apps Script.</p></div></li>
+        <li><b>×</b><div><p><b>Remover</b>: apague o bloco correspondente.</p></div></li>
+        <li><b>◉</b><div><p><b>Mudar status</b>: troque <code>status: 'pend'</code> por <code>'on'</code> quando o link estiver ativo.</p></div></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Estrutura de cada item</h2>
+      <div class="code-box"><span class="k">{</span>
+  <span class="c">cat</span>:        <span class="k">'docente'</span>,     <span class="c">// categoria (chave do CATS)</span>
+  <span class="c">icon</span>:       <span class="k">'🎓'</span>,           <span class="c">// emoji ou ícone (único por item)</span>
+  <span class="c">titulo</span>:     <span class="k">'Nome do item'</span>, <span class="c">// título exibido</span>
+  <span class="c">freq</span>:       <span class="k">'Semestral'</span>,    <span class="c">// periodicidade</span>
+  <span class="c">desc</span>:       <span class="k">'Breve descrição.'</span>,
+  <span class="c">status</span>:     <span class="k">'on'</span>,           <span class="c">// 'on' | 'soon' | 'pend'</span>
+  <span class="c">link</span>:       <span class="k">'https://script.google.com/...'</span>,
+  <span class="c">planilhaId</span>: <span class="k">''</span>              <span class="c">// (opcional) p/ automação futura</span>
+<span class="k">}</span></div>
+      <p class="hint">💡 Os itens aparecem sempre em ordem alfabética pelo título — dentro de cada categoria e também na visão "Todas".</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <b>Portal de Soluções SSN-UFF</b> · Departamento de Serviço Social em Niterói<br>
+    <span style="opacity:.75">Desenvolvido para centralizar processos e reduzir e-mails internos · Setembro/2026</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   CATEGORIAS
+   ═══════════════════════════════════════════════════════════════ */
+const CATS = {
+  docente:    { nome:'Docente',                  color:'var(--forest-dark)', bg:'var(--ok-bg)' },
+  adm:        { nome:'Administrativo',           color:'var(--gold-text)',   bg:'var(--gold-bg)' },
+  ensino:     { nome:'Ensino/Pesquisa/Extensão', color:'var(--teal)',        bg:'var(--teal-bg)' },
+  gestao:     { nome:'Gestão',                   color:'var(--rust)',        bg:'var(--rust-bg)' },
+  concursos:  { nome:'Concursos/Seleções',       color:'var(--plum)',        bg:'var(--plum-bg)' },
+  sistemas:   { nome:'Sistemas UFF',             color:'var(--slate)',       bg:'var(--slate-bg)' }
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   ITENS — reposicionados conforme solicitado.
+   A ordem exibida na tela (dentro de cada categoria e na visão
+   "Todas") é sempre alfabética pelo título, calculada no render.
+   ═══════════════════════════════════════════════════════════════ */
+const ITENS = [
+  // ─── DOCENTE ─────────────────────────────────────────────
+  { cat:'docente', icon:'📖', titulo:'Distribuição de Disciplinas por Professor', freq:'Semestral',
+    desc:'Alocação de disciplinas e carga horária por docente a cada semestre.',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'docente', icon:'🏫', titulo:'Ensalamento', freq:'Semestral',
+    desc:'Distribuição de salas para as disciplinas ofertadas no semestre.',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'docente', icon:'✳️', titulo:'Interesse em Optativas', freq:'Semestral',
+    desc:'Levantamento de interesse dos estudantes em disciplinas optativas.',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'docente', icon:'🎯', titulo:'Orientações Efetivas', freq:'Semestral',
+    desc:'Relação de orientações em andamento e concluídas por docente.',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'docente', icon:'🕰️', titulo:'Possibilidades de Orientações', freq:'Semestral',
+    desc:'Vagas disponíveis por docente para orientação de estudantes.',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'docente', icon:'🗓️', titulo:'Quadro de Horários', freq:'Semestral',
+    desc:'Grade de horários das disciplinas ofertadas pelo departamento.',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'docente', icon:'📄', titulo:'RAD (Relatório Anual Docente)', freq:'Contínuo',
+    desc:'Relatório anual de atividades do corpo docente do departamento.',
+    status:'pend', planilhaId:'', link:'' },
+
+  // ─── ADMINISTRATIVO ──────────────────────────────────────
+  { cat:'adm', icon:'🗂️', titulo:'Área de Trabalho Interno SSN', freq:'Contínuo',
+    desc:'Painel interno de trabalho do departamento (aguardando dados da planilha para gerar a dashboard).',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'adm', icon:'🛒', titulo:'Compras do Departamento', freq:'Contínuo',
+    desc:'Solicitações e acompanhamento de compras e materiais do departamento.',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'adm', icon:'🏛️', titulo:'Controle de Patrimônio', freq:'Contínuo',
+    desc:'Inventário e movimentação de bens patrimoniais do SSN.',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'adm', icon:'🗃️', titulo:'Documentos Produzidos e Publicações', freq:'Mensal',
+    desc:'Registro de documentos produzidos e publicações do departamento.',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'adm', icon:'🗣️', titulo:'Preparação Plenária', freq:'Mensal',
+    desc:'Organização e preparação da pauta e dos materiais para as reuniões plenárias.',
+    status:'pend', planilhaId:'', link:'' },
+
+  // ─── ENSINO/PESQUISA/EXTENSÃO ────────────────────────────
+  { cat:'ensino', icon:'🌍', titulo:'Ações de Extensão', freq:'Semestral',
+    desc:'Registro e acompanhamento de ações de extensão vinculadas ao SSN.',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'ensino', icon:'📚', titulo:'Área de Ensino (Temas de Interesse)', freq:'Semestral',
+    desc:'Levantamento de temas de interesse voltados à área de ensino do departamento.',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'ensino', icon:'🎓', titulo:'Desenvolvimento Acadêmico', freq:'Contínuo',
+    desc:'Acompanhamento do desenvolvimento acadêmico vinculado ao departamento.',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'ensino', icon:'🔬', titulo:'Projetos de Pesquisa', freq:'Anual',
+    desc:'Cadastro de projetos de pesquisa vinculados ao departamento.',
+    status:'pend', planilhaId:'', link:'' },
+
+  // ─── GESTÃO ──────────────────────────────────────────────
+  { cat:'gestao', icon:'📈', titulo:'Acompanhamento Funcional (Promoção/Progressão)', freq:'Contínuo',
+    desc:'Controle de progressões e promoções do corpo docente do departamento.',
+    status:'on', planilhaId:'',
+    link:'https://script.google.com/a/macros/id.uff.br/s/AKfycbwe0s9f-hMjyVTQDZmE9vEJ85vjW4bZoqcIgqhpX4IHLSqdn7W-FxgEb0EFnSftK7p9/exec' },
+  { cat:'gestao', icon:'✈️', titulo:'Afastamentos', freq:'Contínuo',
+    desc:'Controle de afastamentos, licenças e ausências de servidores.',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'gestao', icon:'📝', titulo:'Atualização das DTSs e Comissões', freq:'Contínuo',
+    desc:'Controle de publicação e atualização de DTS e composição de comissões.',
+    status:'on', planilhaId:'',
+    link:'https://script.google.com/a/macros/id.uff.br/s/AKfycbyDJFk9hfyC7jpjhzvYgZH53a7DhB46oU7gFu3yo3PyRsvdEeG1yerLJ88U9u0Ey0Tc/exec' },
+  { cat:'gestao', icon:'🗳️', titulo:'Comparecimento em Plenárias', freq:'Contínuo',
+    desc:'Dashboard de presença dos docentes em reuniões plenárias do departamento.',
+    status:'on', planilhaId:'',
+    link:'https://script.google.com/a/macros/id.uff.br/s/AKfycbyAfOwGzWX6tAo1AcFs0bm4EcUv8shojeqFIdF4SvorZ0PkW8-CAP8jy8r3IgCLfLhq/exec' },
+  { cat:'gestao', icon:'📘', titulo:'Controle de Ementas', freq:'Semestral',
+    desc:'Ementário das disciplinas do SSN, com versionamento e aprovações.',
+    status:'on', planilhaId:'',
+    link:'https://script.google.com/a/macros/id.uff.br/s/AKfycbyYP0b1jIYUYvhPzDQf1SWgKFI2wtT9kh5B9Z6cmAzHBNdta1C12J4z6_Nw4opkpSo/exec' },
+  { cat:'gestao', icon:'🧳', titulo:'Controle SCDP', freq:'Contínuo',
+    desc:'Gestão de afastamentos e diárias via Sistema de Concessão de Diárias e Passagens.',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'gestao', icon:'📆', titulo:'Mapa de Atividades (Linha do Tempo, Calendário e Plano de Trabalho dos Técnicos)', freq:'Contínuo',
+    desc:'Linha do tempo, calendário de atividades e plano de trabalho dos técnicos do departamento.',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'gestao', icon:'🗺️', titulo:'Planejamento (Planilha Mãe e Dados Docentes)', freq:'Semestral',
+    desc:'Planejamento estratégico do departamento e base de dados docentes.',
+    status:'pend', planilhaId:'', link:'' },
+
+  // ─── CONCURSOS/SELEÇÕES ──────────────────────────────────
+  { cat:'concursos', icon:'📑', titulo:'Concursos Docentes', freq:'Sob demanda',
+    desc:'Manual/Checklist para a condução de concursos para docentes efetivos.',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'concursos', icon:'📢', titulo:'CPD - Concursos e Seleções', freq:'Contínuo',
+    desc:'Sistema de concursos e seleções docentes (CPD).',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'concursos', icon:'📋', titulo:'Seleções Docentes', freq:'Sob demanda',
+    desc:'Manual/Checklist para a condução de processos seletivos para docentes substitutos.',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'concursos', icon:'🧾', titulo:'Sistema FEC', freq:'Contínuo',
+    desc:'Sistema FEC utilizado pelo departamento.',
+    status:'pend', planilhaId:'', link:'' },
+
+  // ─── SISTEMAS UFF ────────────────────────────────────────
+  { cat:'sistemas', icon:'📰', titulo:'Boletim de Serviços UFF', freq:'Contínuo',
+    desc:'Publicação oficial de atos e serviços da UFF.',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'sistemas', icon:'🛠️', titulo:'CITSmart', freq:'Contínuo',
+    desc:'Sistema de abertura e acompanhamento de chamados de suporte/TI.',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'sistemas', icon:'🆔', titulo:'Id.UFF', freq:'Contínuo',
+    desc:'Portal de identidade institucional da UFF (autenticação e serviços).',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'sistemas', icon:'🖥️', titulo:'Petrvs - PGD', freq:'Contínuo',
+    desc:'Sistema institucional de Programa de Gestão (PGD) e teletrabalho.',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'sistemas', icon:'📁', titulo:'Processos SEI', freq:'Contínuo',
+    desc:'Acompanhamento dos processos SEI em tramitação no departamento.',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'sistemas', icon:'📊', titulo:'SisAd (Avaliações)', freq:'Anual',
+    desc:'Sistema de avaliações institucionais (SisAd).',
+    status:'pend', planilhaId:'', link:'' },
+  { cat:'sistemas', icon:'⏱️', titulo:'Velti - Ponto', freq:'Contínuo',
+    desc:'Sistema de registro eletrônico de ponto.',
+    status:'pend', planilhaId:'', link:'' }
+];
+
+/* ═══════════════════════════════════════════════════════════════
+   RENDERIZAÇÃO
+   ═══════════════════════════════════════════════════════════════ */
+const grid           = document.getElementById('grid');
+const catsEl         = document.getElementById('cats');
+const busca          = document.getElementById('busca');
+const cShow          = document.getElementById('c-show');
+const cAll           = document.getElementById('c-all');
+const catBreak       = document.getElementById('cat-breakdown');
+const recentesIcones = document.getElementById('recentes-icons');
+const toastEl        = document.getElementById('toast');
+
+let estado = { busca:'', cat:'todas' };
+
+/* Ordem alfabética pelo título — vale tanto dentro de uma categoria
+   quanto na visão "Todas" (que mistura todas as categorias). */
+function ordenarPorTitulo(lista){
+  return [...lista].sort((a,b) => a.titulo.localeCompare(b.titulo, 'pt-BR'));
+}
+
+/* ---------- últimos vistos (apenas ícones, salvos no navegador) ---------- */
+const RECENT_KEY = 'ssnHubRecentes';
+function carregarRecentes(){
+  try { return JSON.parse(localStorage.getItem(RECENT_KEY)) || []; }
+  catch(e){ return []; }
+}
+function salvarRecentes(arr){
+  try { localStorage.setItem(RECENT_KEY, JSON.stringify(arr)); } catch(e){}
+}
+let recentes = carregarRecentes();
+
+function renderRecentes(){
+  if (recentes.length === 0){
+    recentesIcones.innerHTML = `<span class="ri-empty">Nenhum item visto ainda</span>`;
+    return;
+  }
+  recentesIcones.innerHTML = recentes.map(r =>
+    `<span class="ri" title="${r.titulo}">${r.icon}</span>`
+  ).join('');
+}
+
+function registrarVisualizacao(item){
+  recentes = recentes.filter(r => r.titulo !== item.titulo);
+  recentes.unshift(item);
+  recentes = recentes.slice(0, 5);
+  salvarRecentes(recentes);
+  renderRecentes();
+}
+
+catsEl.innerHTML = `<button class="cat on" data-cat="todas">Todas (${ITENS.length})</button>` +
+  Object.entries(CATS).map(([k,v]) =>
+    `<button class="cat" data-cat="${k}">${v.nome} (${ITENS.filter(i=>i.cat===k).length})</button>`
+  ).join('');
+
+catBreak.innerHTML = Object.entries(CATS).map(([k,v]) => {
+  const n = ITENS.filter(i=>i.cat===k).length;
+  return `<li><span class="dot" style="background:${v.color}"></span>${v.nome} · <b>${n}</b></li>`;
+}).join('');
+
+catsEl.addEventListener('click', e => {
+  const b = e.target.closest('.cat');
+  if (!b) return;
+  document.querySelectorAll('.cat').forEach(c => c.classList.remove('on'));
+  b.classList.add('on');
+  estado.cat = b.dataset.cat;
+  render();
+});
+
+busca.addEventListener('input', e => {
+  estado.busca = e.target.value.toLowerCase();
+  render();
+});
+
+function mostrarToast(msg){
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  setTimeout(() => toastEl.classList.remove('show'), 1800);
+}
+function copiarLink(link){
+  event.stopPropagation();
+  navigator.clipboard.writeText(link).then(() => mostrarToast('Link copiado ✓'))
+    .catch(() => mostrarToast('Não foi possível copiar'));
+}
+window.copiarLink = copiarLink;
+
+function render(){
+  let filtrados = ITENS.filter(i => {
+    const okBusca = !estado.busca ||
+      i.titulo.toLowerCase().includes(estado.busca) ||
+      i.desc.toLowerCase().includes(estado.busca) ||
+      CATS[i.cat].nome.toLowerCase().includes(estado.busca);
+    const okCat = estado.cat === 'todas' || i.cat === estado.cat;
+    return okBusca && okCat;
+  });
+  filtrados = ordenarPorTitulo(filtrados);
+
+  cAll.textContent  = ITENS.length;
+  cShow.textContent = filtrados.length;
+
+  if (filtrados.length === 0){
+    grid.innerHTML = `<div class="empty">
+      <h3>Nenhum item encontrado</h3>
+      <p>Tente outra busca ou limpe os filtros.</p>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = filtrados.map((i, idx) => {
+    const cat = CATS[i.cat];
+    const ativo = i.status === 'on';
+    const emBreve = i.status === 'soon';
+    const statusClass = ativo ? 'status-on' : (emBreve ? 'status-soon' : 'status-pend');
+    const statusTxt  = ativo ? 'Ativo' : (emBreve ? 'Em breve' : 'Pendente');
+    const btns = ativo
+      ? `<a class="btn btn-primary" href="${i.link}" target="_blank" rel="noopener">Abrir ↗</a>
+         <button class="btn btn-icon" title="Copiar link" onclick="copiarLink('${i.link}')">⧉</button>`
+      : (emBreve
+          ? `<button class="btn" disabled>Em breve</button>`
+          : `<button class="btn" disabled>Aguardando link</button>`);
+
+    return `<article class="item" data-idx="${idx}" style="--cat-color:${cat.color};--cat-bg:${cat.bg}">
+      <span class="status-pill ${statusClass}">${statusTxt}</span>
+      <div class="item-head">
+        <div class="icon" style="background:${cat.bg}">${i.icon}</div>
+        <div>
+          <div class="cat-label" style="color:${cat.color}">${cat.nome}</div>
+          <h3>${i.titulo}</h3>
+          <div class="freq">⏱ ${i.freq}</div>
+        </div>
+      </div>
+      <p class="desc">${i.desc}</p>
+      <div class="actions">${btns}</div>
+    </article>`;
+  }).join('');
+
+  grid.__filtrados = filtrados;
+}
+
+grid.addEventListener('click', e => {
+  const card = e.target.closest('.item');
+  if (!card) return;
+  const item = grid.__filtrados[Number(card.dataset.idx)];
+  if (!item) return;
+  registrarVisualizacao({ titulo:item.titulo, icon:item.icon });
+});
+
+renderRecentes();
+render();
+</script>
+
+</body>
+</html>
