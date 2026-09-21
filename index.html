@@ -77,9 +77,10 @@
     display:flex;align-items:center;justify-content:center;cursor:default;
   }
   .recentes-icons .ri-empty{font-size:11px;color:rgba(247,236,226,.55)}
-  .badge-test{
+  .badge-version{
     font-size:12px;padding:4px 10px;border-radius:999px;
-    border:1px solid rgba(247,236,226,.5);color:#f7ece2;white-space:nowrap;
+    border:1px solid rgba(247,236,226,.4);color:rgba(247,236,226,.9);white-space:nowrap;
+    font-family:ui-monospace,'SF Mono',monospace;letter-spacing:.03em;
   }
 
   main{padding:26px 0 70px}
@@ -154,12 +155,10 @@
   .empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted);border:1px dashed var(--line);border-radius:var(--radius)}
   .empty h3{font-family:'Source Serif 4',serif;color:var(--ink);margin:8px 0;font-size:18px}
 
-  /* ---------- rodapé "como editar" — texto mais claro sobre fundo escuro ---------- */
   .edit-guide{background:linear-gradient(180deg,var(--forest-dark) 0%,var(--forest) 100%);color:#fdf8ef;padding:36px 0;margin-top:32px}
   .edit-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
   .edit-grid h2{font-size:20px;color:#fbe9c3;margin:0 0 10px}
   .edit-grid p{opacity:1;color:#fdf8ef;margin:0 0 14px;font-size:14px}
-  /* bloco de código com fundo claro, mantendo legibilidade do exemplo */
   .code-box{
     background:var(--paper-raised);border:1px solid var(--line);border-radius:9px;
     padding:16px;font-family:ui-monospace,'SF Mono',monospace;font-size:12.5px;line-height:1.7;
@@ -209,7 +208,7 @@
     </div>
     <div class="header-right">
       <div class="recentes-icons" id="recentes-icons"></div>
-      <span class="badge-test">Protótipo de teste</span>
+      <span class="badge-version">v1.8</span>
     </div>
   </div>
 </header>
@@ -288,9 +287,9 @@ const CATS = {
 };
 
 /* ═══════════════════════════════════════════════════════════════
-   ITENS — reposicionados conforme solicitado.
-   A ordem exibida na tela (dentro de cada categoria e na visão
-   "Todas") é sempre alfabética pelo título, calculada no render.
+   ITENS — edite apenas aqui para adicionar, remover ou ativar links.
+   A ordem exibida (por categoria e na visão "Todas") é sempre
+   alfabética pelo título, calculada automaticamente no render.
    ═══════════════════════════════════════════════════════════════ */
 const ITENS = [
   // ─── DOCENTE ─────────────────────────────────────────────
@@ -429,13 +428,10 @@ const toastEl        = document.getElementById('toast');
 
 let estado = { busca:'', cat:'todas' };
 
-/* Ordem alfabética pelo título — vale tanto dentro de uma categoria
-   quanto na visão "Todas" (que mistura todas as categorias). */
 function ordenarPorTitulo(lista){
   return [...lista].sort((a,b) => a.titulo.localeCompare(b.titulo, 'pt-BR'));
 }
 
-/* ---------- últimos vistos (apenas ícones, salvos no navegador) ---------- */
 const RECENT_KEY = 'ssnHubRecentes';
 function carregarRecentes(){
   try { return JSON.parse(localStorage.getItem(RECENT_KEY)) || []; }
