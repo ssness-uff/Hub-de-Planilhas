@@ -278,11 +278,8 @@
    CATEGORIAS
    ═══════════════════════════════════════════════════════════════ */
 const CATS = {
-  docente:    { nome:'Docente',                  color:'var(--forest-dark)', bg:'var(--ok-bg)' },
-  adm:        { nome:'Administrativo',           color:'var(--gold-text)',   bg:'var(--gold-bg)' },
-  ensino:     { nome:'Ensino/Pesquisa/Extensão', color:'var(--teal)',        bg:'var(--teal-bg)' },
-  gestao:     { nome:'Gestão',                   color:'var(--rust)',        bg:'var(--rust-bg)' },
-  concursos:  { nome:'Concursos/Seleções',       color:'var(--plum)',        bg:'var(--plum-bg)' },
+  docente:    { nome:'Assuntos Docentes',        color:'var(--forest-dark)', bg:'var(--ok-bg)' },
+  gestao:     { nome:'Gestão SSN',               color:'var(--rust)',        bg:'var(--rust-bg)' },
   sistemas:   { nome:'Sistemas UFF',             color:'var(--slate)',       bg:'var(--slate-bg)' }
 };
 
@@ -292,7 +289,7 @@ const CATS = {
    alfabética pelo título, calculada automaticamente no render.
    ═══════════════════════════════════════════════════════════════ */
 const ITENS = [
-  // ─── DOCENTE ─────────────────────────────────────────────
+  // ─── ASSUNTOS DOCENTES ─────────────────────────────────────────────
   { cat:'docente', icon:'📖', titulo:'Distribuição de Disciplinas por Professor', freq:'Semestral',
     desc:'Alocação de disciplinas e carga horária por docente a cada semestre.',
     status:'soon', planilhaId:'', link:'' },
@@ -302,51 +299,41 @@ const ITENS = [
   { cat:'docente', icon:'✳️', titulo:'Interesse em Optativas', freq:'Semestral',
     desc:'Levantamento de interesse dos estudantes em disciplinas optativas.',
     status:'soon', planilhaId:'', link:'' },
-  { cat:'docente', icon:'🎯', titulo:'Orientações Efetivas', freq:'Semestral',
-    desc:'Relação de orientações em andamento e concluídas por docente.',
-    status:'soon', planilhaId:'', link:'' },
   { cat:'docente', icon:'🕰️', titulo:'Possibilidades de Orientações', freq:'Semestral',
     desc:'Vagas disponíveis por docente para orientação de estudantes.',
     status:'soon', planilhaId:'', link:'' },
-  { cat:'docente', icon:'🗓️', titulo:'Quadro de Horários', freq:'Semestral',
-    desc:'Grade de horários das disciplinas ofertadas pelo departamento.',
-    status:'soon', planilhaId:'', link:'' },
-  { cat:'docente', icon:'📄', titulo:'RAD (Relatório Anual Docente)', freq:'Contínuo',
+  { cat:'docente', icon:'📄', titulo:'Controle RAD (Relatório Anual Docente)', freq:'Contínuo',
     desc:'Relatório anual de atividades do corpo docente do departamento.',
-    status:'on', planilhaId:'', link:'https://app.uff.br/rad/' },
-
-  // ─── ADMINISTRATIVO ──────────────────────────────────────
-  { cat:'adm', icon:'🗂️', titulo:'Área de Trabalho Interno SSN', freq:'Contínuo',
-    desc:'Painel interno de trabalho do departamento (aguardando dados da planilha para gerar a dashboard).',
-    status:'on', planilhaId:'', link:'https://drive.google.com/drive/folders/1jWKfVUfpOX4M9w9w-EuFo5ep_154rFWy' },
-  { cat:'adm', icon:'🛒', titulo:'Compras do Departamento', freq:'Contínuo',
-    desc:'Solicitações e acompanhamento de compras e materiais do departamento.',
-    status:'on', planilhaId:'', link:'https://script.google.com/a/macros/id.uff.br/s/AKfycbxjopBcsw4br9zm0zxZw1WGlmV2BZKOJB054_P-0lxrraRf5nFj-X54FqgMKiXI4bo2/exec' },
-  { cat:'adm', icon:'🏛️', titulo:'Controle de Patrimônio', freq:'Contínuo',
-    desc:'Inventário e movimentação de bens e controle patrimonial do SSN.',
-    status:'on', planilhaId:'', link:'https://script.google.com/a/macros/id.uff.br/s/AKfycbwjyhyAFJL49_ZNIqVYpivjeT-cScA8Td-LGTcNPAFq7X7ODjtlJCr96QHSj7Eu7nyI/exec' },
-  { cat:'adm', icon:'🗃️', titulo:'Documentos Produzidos e Publicações', freq:'Mensal',
-    desc:'Registro de documentos produzidos e publicações do departamento.',
     status:'soon', planilhaId:'', link:'' },
-  { cat:'adm', icon:'🗣️', titulo:'Preparação Plenária', freq:'Mensal',
-    desc:'Organização e preparação da pauta e dos materiais para as reuniões plenárias.',
-    status:'on', planilhaId:'', link:'https://script.google.com/macros/s/AKfycbwcp5tDLwcrMNLz22_3Z7UMMJTQGRhPQNdoF0pXoQQ4PFaR-zZwbj6oVoCTmDKYh0Y/exec' },
-
-  // ─── ENSINO/PESQUISA/EXTENSÃO ────────────────────────────
-  { cat:'ensino', icon:'🌍', titulo:'Ações de Extensão', freq:'Semestral',
+  { cat:'docente', icon:'🌍', titulo:'Ações de Extensão', freq:'Semestral',
     desc:'Registro e acompanhamento de ações de extensão vinculadas ao SSN.',
     status:'soon', planilhaId:'', link:'' },
-  { cat:'ensino', icon:'📚', titulo:'Área de Ensino (Temas de Interesse)', freq:'Semestral',
+  { cat:'docente', icon:'📚', titulo:'Área de Ensino (Temas de Interesse)', freq:'Semestral',
     desc:'Levantamento de temas de interesse voltados à área de ensino do departamento.',
     status:'soon', planilhaId:'', link:'' },
-  { cat:'ensino', icon:'🎓', titulo:'Desenvolvimento Acadêmico', freq:'Contínuo',
+  { cat:'docente', icon:'🎓', titulo:'Desenvolvimento Acadêmico', freq:'Contínuo',
     desc:'Acompanhamento do desenvolvimento acadêmico vinculado ao departamento.',
     status:'soon', planilhaId:'', link:'' },
-  { cat:'ensino', icon:'🔬', titulo:'Projetos de Pesquisa', freq:'Anual',
+  { cat:'docente', icon:'🔬', titulo:'Projetos de Pesquisa', freq:'Anual',
     desc:'Cadastro de projetos de pesquisa vinculados ao departamento.',
     status:'soon', planilhaId:'', link:'' },
-
-  // ─── GESTÃO ──────────────────────────────────────────────
+  
+  // ─── GESTÃO SSN ──────────────────────────────────────────────
+  { cat:'gestao', icon:'🗂️', titulo:'Área de Trabalho Interno SSN', freq:'Contínuo',
+    desc:'Painel interno de trabalho do departamento (aguardando dados da planilha para gerar a dashboard).',
+    status:'on', planilhaId:'', link:'https://drive.google.com/drive/folders/1jWKfVUfpOX4M9w9w-EuFo5ep_154rFWy' },
+  { cat:'gestao', icon:'🛒', titulo:'Compras do Departamento', freq:'Contínuo',
+    desc:'Solicitações e acompanhamento de compras e materiais do departamento.',
+    status:'on', planilhaId:'', link:'https://script.google.com/a/macros/id.uff.br/s/AKfycbxjopBcsw4br9zm0zxZw1WGlmV2BZKOJB054_P-0lxrraRf5nFj-X54FqgMKiXI4bo2/exec' },
+  { cat:'gestao', icon:'🏛️', titulo:'Controle de Patrimônio', freq:'Contínuo',
+    desc:'Inventário e movimentação de bens e controle patrimonial do SSN.',
+    status:'on', planilhaId:'', link:'https://script.google.com/a/macros/id.uff.br/s/AKfycbwjyhyAFJL49_ZNIqVYpivjeT-cScA8Td-LGTcNPAFq7X7ODjtlJCr96QHSj7Eu7nyI/exec' },
+  { cat:'gestao', icon:'🗃️', titulo:'Documentos Produzidos e Publicações', freq:'Mensal',
+    desc:'Registro de documentos produzidos e publicações do departamento.',
+    status:'soon', planilhaId:'', link:'' },
+  { cat:'gestao', icon:'🗣️', titulo:'Preparação Plenária', freq:'Mensal',
+    desc:'Organização e preparação da pauta e dos materiais para as reuniões plenárias.',
+    status:'on', planilhaId:'', link:'https://script.google.com/macros/s/AKfycbwcp5tDLwcrMNLz22_3Z7UMMJTQGRhPQNdoF0pXoQQ4PFaR-zZwbj6oVoCTmDKYh0Y/exec' },
   { cat:'gestao', icon:'📈', titulo:'Acompanhamento Funcional (Promoção/Progressão)', freq:'Contínuo',
     desc:'Controle de progressões e promoções do corpo docente do departamento.',
     status:'on', planilhaId:'',
@@ -375,21 +362,10 @@ const ITENS = [
   { cat:'gestao', icon:'🗺️', titulo:'Planejamento (Planilha Mãe e Dados Docentes)', freq:'Semestral',
     desc:'Planejamento estratégico do departamento e base de dados docentes.',
     status:'soon', planilhaId:'', link:'' },
-
-  // ─── CONCURSOS/SELEÇÕES ──────────────────────────────────
-  { cat:'concursos', icon:'📑', titulo:'Concursos Docentes', freq:'Sob demanda',
-    desc:'Manual/Checklist para a condução de concursos para docentes efetivos.',
-    status:'soon', planilhaId:'', link:'' },
-  { cat:'concursos', icon:'📢', titulo:'CPD - Concursos e Seleções', freq:'Contínuo',
-    desc:'Sistema de concursos e seleções docentes (CPD).',
-    status:'on', planilhaId:'', link:'https://app.uff.br/cpd/home.cpd' },
-  { cat:'concursos', icon:'📋', titulo:'Seleções Docentes', freq:'Sob demanda',
-    desc:'Manual/Checklist para a condução de processos seletivos para docentes substitutos.',
+  { cat:'gestao', icon:'📋', titulo:'Concursos e Seleções Docentes', freq:'Sob demanda',
+    desc:'Manual/Checklist para a condução de processos seletivos para docentes efetivos e substitutos.',
     status:'on', planilhaId:'', link:'https://script.google.com/a/macros/id.uff.br/s/AKfycbxc4gT-TIoSZUUyqu2-ZBpD-yi1YXM-vcTV3Tpnc_2xQO9sUEt805QGZZLs6jSVK1I/exec' },
-  { cat:'concursos', icon:'🧾', titulo:'Sistema FEC', freq:'Contínuo',
-    desc:'Sistema FEC utilizado pelo departamento.',
-    status:'on', planilhaId:'', link:'https://app.somosfec.org.br/concursos_cpd/usuarios/sign_in' },
-
+ 
   // ─── SISTEMAS UFF ────────────────────────────────────────
   { cat:'sistemas', icon:'📰', titulo:'Boletim de Serviços UFF', freq:'Contínuo',
     desc:'Publicação oficial de atos e serviços da UFF.',
@@ -400,6 +376,9 @@ const ITENS = [
   { cat:'sistemas', icon:'🆔', titulo:'STI-Id.UFF', freq:'Contínuo',
     desc:'Portal de identidade institucional da UFF (autenticação e serviços).',
     status:'on', planilhaId:'', link:'https://app.uff.br/iduff/' },
+  { cat:'sistemas', icon:'🗓️', titulo:'Quadro de Horários', freq:'Semestral',
+    desc:'Grade de horários das disciplinas ofertadas pelo departamento.',
+    status:'on', planilhaId:'', link:'https://app.uff.br/graduacao/quadrodehorarios' },
   { cat:'sistemas', icon:'🖥️', titulo:'Petrvs - PGD', freq:'Contínuo',
     desc:'Sistema institucional de Programa de Gestão (PGD) e teletrabalho.',
     status:'on', planilhaId:'', link:'https://uff.pgd.gestao.gov.br/login' },
@@ -409,9 +388,18 @@ const ITENS = [
   { cat:'sistemas', icon:'🧳', titulo:'Sistema SCDP', freq:'Contínuo',
     desc:'Sistema de Concessão de Diárias e Passagens.',
     status:'on', planilhaId:'', link:'https://www2.scdp.gov.br/novoscdp/home.xhtml' },
+  { cat:'sistemas', icon:'🎯', titulo:'Sistema RAD', freq:'Contínuo',
+    desc:'Sistema operador do Relatório anual de atividades do corpo docente do departamento.',
+    status:'on', planilhaId:'', link:'https://app.uff.br/rad/' },
   { cat:'sistemas', icon:'📊', titulo:'SisAd (Avaliações)', freq:'Anual',
     desc:'Sistema de avaliações institucionais (SisAd).',
     status:'on', planilhaId:'', link:'https://app.uff.br/sisad/avaliacoes/minhas_avaliacoes' },
+  { cat:'concursos', icon:'📢', titulo:'CPD - Concursos e Seleções', freq:'Contínuo',
+    desc:'Sistema de concursos e seleções docentes (CPD).',
+    status:'on', planilhaId:'', link:'https://app.uff.br/cpd/home.cpd' },
+  { cat:'concursos', icon:'🧾', titulo:'Sistema FEC', freq:'Contínuo',
+    desc:'Sistema FEC utilizado pelo departamento.',
+    status:'on', planilhaId:'', link:'https://app.somosfec.org.br/concursos_cpd/usuarios/sign_in' },
   { cat:'sistemas', icon:'⏱️', titulo:'Velti - Ponto', freq:'Contínuo',
     desc:'Sistema de registro eletrônico de ponto.',
     status:'on', planilhaId:'', link:'https://app.uff.br/ponto/workspace.jsf' }
