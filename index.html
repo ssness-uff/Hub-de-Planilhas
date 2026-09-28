@@ -375,9 +375,10 @@ header.dept .sub2{
 }
 .search:focus-within i{color:var(--gold-2)}
 
+/* ── pílulas de status (agora 3 colunas) ── */
 .pills{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:repeat(3, 1fr);
   gap:6px;
 }
 .pill{
@@ -385,7 +386,7 @@ header.dept .sub2{
   border:1px solid var(--line-1);
   color:var(--ink-2);
   font-size:12px;font-weight:500;
-  padding:7px 10px;
+  padding:7px 6px;
   border-radius:var(--r-full);
   transition:all .18s var(--ease);
   text-align:center;
@@ -568,8 +569,7 @@ header.dept .sub2{
     var(--paper-1);
 }
 .panel-head::after{
-  content:"";
-  position:absolute;left:20px;right:20px;bottom:0;height:1px;
+  content:"";position:absolute;left:20px;right:20px;bottom:0;height:1px;
   background:linear-gradient(90deg, var(--gold) 0%, rgba(181,138,63,.35) 40%, transparent 100%);
   opacity:.55;
 }
@@ -586,13 +586,8 @@ header.dept .sub2{
   box-shadow:inset 0 1px 0 rgba(255,255,255,.25), 0 4px 10px rgba(151,112,42,.25);
 }
 .panel-title{flex:1;min-width:0}
-.panel-title h3{
-  font-size:17px;font-weight:600;line-height:1.2;
-  margin:0 0 2px;
-}
-.panel-title p{
-  margin:0;font-size:12.5px;color:var(--ink-3);
-}
+.panel-title h3{font-size:17px;font-weight:600;line-height:1.2;margin:0 0 2px;}
+.panel-title p{margin:0;font-size:12.5px;color:var(--ink-3);}
 .panel-title p b{color:var(--ink-1);font-weight:600;font-variant-numeric:tabular-nums}
 
 .panel-actions{display:flex;align-items:center;gap:8px}
@@ -646,8 +641,7 @@ header.dept .sub2{
   overflow:hidden;
 }
 .item::before{
-  content:"";
-  position:absolute;left:0;top:0;bottom:0;width:3px;
+  content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
   background:var(--cat-color, var(--brand));
 }
 .item:hover{
@@ -878,7 +872,7 @@ footer.site-foot a{color:var(--gold-2)}
   .panel-head{flex-wrap:wrap;padding:14px 16px}
   .panel-actions{width:100%;justify-content:flex-start}
   .panel-body{padding:16px}
-  .pills{grid-template-columns:1fr 1fr}
+  .pills{grid-template-columns:repeat(3, 1fr)}
   table.data-table{font-size:12.5px}
   table.data-table thead th,
   table.data-table tbody td{padding:10px}
@@ -975,7 +969,7 @@ footer.site-foot a{color:var(--gold-2)}
 </header>
 
 <!-- ═══════════════════════════════════════════════════════════
-     SUBBAR
+     SUBBAR  (sem o indicador "Em breve")
      ═══════════════════════════════════════════════════════════ -->
 <div class="subbar">
   <div class="wrap subbar-inner">
@@ -994,11 +988,6 @@ footer.site-foot a{color:var(--gold-2)}
         <i class="fa-solid fa-circle-check"></i>
         <span class="label">Ativos</span>
         <span class="value" id="meta-on">0</span>
-      </div>
-      <div class="meta">
-        <i class="fa-solid fa-hourglass-half"></i>
-        <span class="label">Em breve</span>
-        <span class="value" id="meta-soon">0</span>
       </div>
     </div>
     <div class="progress-wrap" aria-label="Cobertura de itens ativos">
@@ -1026,10 +1015,10 @@ footer.site-foot a{color:var(--gold-2)}
         </div>
 
         <span class="filter-label">Status</span>
+        <!-- Removido o filtro "Em breve" -->
         <div class="pills" id="status-pills" role="tablist" aria-label="Filtrar por status">
           <button class="pill on" type="button" data-status="todos">Todos</button>
           <button class="pill" type="button" data-status="on">Ativos</button>
-          <button class="pill" type="button" data-status="soon">Em breve</button>
           <button class="pill" type="button" data-status="pend">Pendentes</button>
         </div>
       </div>
@@ -1056,7 +1045,7 @@ footer.site-foot a{color:var(--gold-2)}
       <i class="fa-solid fa-book-bookmark hero-wm" aria-hidden="true"></i>
     </section>
 
-    <!-- KPIs -->
+    <!-- KPIs (sem "Em breve") -->
     <section class="kpis" aria-label="Indicadores">
       <div class="kpi">
         <div class="kpi-icon" style="--ic:var(--brand);--ic-bg:var(--brand-soft)"><i class="fa-solid fa-layer-group"></i></div>
@@ -1070,13 +1059,6 @@ footer.site-foot a{color:var(--gold-2)}
         <div class="kpi-body">
           <span class="kpi-label">Ativos</span>
           <span class="kpi-value" id="kpi-on">0</span>
-        </div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-icon" style="--ic:var(--warn);--ic-bg:var(--warn-bg)"><i class="fa-solid fa-hourglass-half"></i></div>
-        <div class="kpi-body">
-          <span class="kpi-label">Em breve</span>
-          <span class="kpi-value" id="kpi-soon">0</span>
         </div>
       </div>
       <div class="kpi">
@@ -1139,6 +1121,8 @@ const CATS = {
 
 /* ═══════════════════════════════════════════════════════════════
    ITENS
+   (todos com status 'on'; o código continua tolerando 'soon'/'pend'
+   caso algum item futuro precise ser marcado dessa forma)
    ═══════════════════════════════════════════════════════════════ */
 const ITENS = [
   /* ─── ASSUNTOS DOCENTES ─────────────────────────────────── */
@@ -1192,10 +1176,10 @@ const ITENS = [
     status:'on', link:'https://script.google.com/macros/s/AKfycbxBkOfN36LQo1G6wFryx_d1h3RAy9PxIef0n1sHlego6R53Oun9W8ZbbsVNg_nRXw/exec' },
 
   { cat:'gestao', fa:'fa-envelope-open', titulo:'Caixa de Mensagens do Departamento', freq:'Contínuo',
-  desc:'Acesso à caixa de e-mail institucional do departamento para triagem e encaminhamento de demandas.',
-  status:'on', link:'https://mail.google.com/mail/u/0/#inbox' },
+    desc:'Acesso à caixa de e-mail institucional do departamento para triagem e encaminhamento de demandas.',
+    status:'on', link:'https://mail.google.com/mail/u/0/#inbox' },
 
-   { cat:'gestao', fa:'fa-rocket', titulo:'Mapa de Produção Docente e Desenvolvimento Acadêmico', freq:'Semestral',
+  { cat:'gestao', fa:'fa-rocket', titulo:'Mapa de Produção Docente e Desenvolvimento Acadêmico', freq:'Semestral',
     desc:'Consolidado do planejamento de ensino, projetos de pesquisa, ações de extensão e metas de desenvolvimento acadêmico do corpo docente da SSN.',
     status:'on', link:'https://script.google.com/macros/s/AKfycbxePIHW9KfvAztXEMirHEZM32136WCoYMZiNSdp9wObTCx-CFLDylVATiI13OKGZ8yh/exec' },
 
@@ -1275,23 +1259,22 @@ const ordenarPorTitulo = lista =>
   [...lista].sort((a,b) => a.titulo.localeCompare(b.titulo, 'pt-BR'));
 
 /* ═══════════════════════════════════════════════════════════════
-   MÉTRICAS
+   MÉTRICAS  (sem contagem de "Em breve")
    ═══════════════════════════════════════════════════════════════ */
 function atualizarMetricas(){
   const total  = ITENS.length;
   const on     = ITENS.filter(i => i.status === 'on').length;
-  const soon   = ITENS.filter(i => i.status === 'soon').length;
   const areas  = Object.keys(CATS).length;
   const pct    = total ? Math.round((on / total) * 100) : 0;
 
-  document.getElementById('meta-total').textContent = total;
-  document.getElementById('meta-on').textContent    = on;
-  document.getElementById('meta-soon').textContent  = soon;
+  const set = (id, val) => { const n = document.getElementById(id); if (n) n.textContent = val; };
 
-  document.getElementById('kpi-total').textContent  = total;
-  document.getElementById('kpi-on').textContent     = on;
-  document.getElementById('kpi-soon').textContent   = soon;
-  document.getElementById('kpi-areas').textContent  = areas;
+  set('meta-total', total);
+  set('meta-on', on);
+
+  set('kpi-total', total);
+  set('kpi-on', on);
+  set('kpi-areas', areas);
 
   el.progressFill.style.width = pct + '%';
   el.progressVal.textContent  = pct + '%';
@@ -1515,7 +1498,6 @@ function render(){
       </div>`;
   }
 
-  // re-cache grid para delegação
   el.grid = document.getElementById('grid');
 }
 
@@ -1559,7 +1541,6 @@ document.querySelectorAll('.segmented button').forEach(btn => {
    EVENTOS — AÇÕES NOS CARDS/LINHAS
    ═══════════════════════════════════════════════════════════════ */
 el.panelBody.addEventListener('click', e => {
-  // Copiar link
   const copyBtn = e.target.closest('[data-copy]');
   if (copyBtn){
     e.preventDefault();
@@ -1571,17 +1552,14 @@ el.panelBody.addEventListener('click', e => {
     return;
   }
 
-  // Registrar visualização (clique no card)
   const card = e.target.closest('.item');
   if (card){
-    // Descobrir item pelo título
     const titulo = card.querySelector('h3')?.textContent;
     const item = ITENS.find(i => i.titulo === titulo);
     if (item) registrarVisualizacao(item);
     return;
   }
 
-  // Clique em linha da tabela (fora dos botões)
   const tr = e.target.closest('tr[data-link]');
   if (tr){
     const ativo = tr.dataset.ativo === 'true';
